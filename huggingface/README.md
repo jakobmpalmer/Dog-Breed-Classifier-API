@@ -34,7 +34,7 @@ The Kaggle [70 Dog Breeds-Image Data Set](https://www.kaggle.com/datasets/gpiose
 
 | Evaluation | Accuracy |
 |---|---|
-| Test set, clean (no augmentation), top-1 | **96.14%** (673/700) |
+| Test set, clean (no augmentation), top-1 | **96.43%** (675/700) |
 | Test set, clean, top-5 | 100.00% |
 | Test set, Kaggle `model.evaluate` (with augmentation) | 96.29% |
 | Validation set, Kaggle `model.evaluate` (with augmentation) | 92.57% |
@@ -48,9 +48,13 @@ Inputs must be prepared exactly as in training:
 
 1. Decode the image and convert it to RGB.
 2. Resize to 224x224 with nearest-neighbor resampling.
-3. Convert to float32 and divide by 255.
-4. Subtract the ImageNet channel means `[0.485, 0.456, 0.406]`. Do **not** divide by a standard deviation.
+3. Convert to float32 (pixel values 0-255) and subtract the ImageNet channel means
+   `[0.485, 0.456, 0.406]`.
+4. Divide by 255. Do **not** divide by a standard deviation.
 5. Add a batch dimension: shape `[1, 224, 224, 3]` (NHWC).
+
+The order in steps 3-4 matches training: the notebook subtracts the means in the
+`ImageDataGenerator`'s `preprocessing_function`, and Keras applies that before `rescale=1./255`.
 
 ```python
 import json
@@ -62,7 +66,7 @@ session = ort.InferenceSession("dog_breed_densenet.onnx")
 labels = json.load(open("labels.json"))
 
 img = Image.open("dog.jpg").convert("RGB").resize((224, 224), Image.Resampling.NEAREST)
-x = np.asarray(img, dtype=np.float32) / 255.0 - np.array([0.485, 0.456, 0.406], dtype=np.float32)
+x = (np.asarray(img, dtype=np.float32) - np.array([0.485, 0.456, 0.406], dtype=np.float32)) / 255.0
 probs = session.run(None, {"image": x[np.newaxis]})[0][0]
 print(labels[int(probs.argmax())], float(probs.max()))
 ```
