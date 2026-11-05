@@ -50,8 +50,8 @@ CORS(app, origins=[o.strip() for o in ALLOWED_ORIGINS if o.strip()])
 def preprocess(img):
     """Match training: RGB, nearest resize to 224x224, /255, minus means, NHWC."""
     img = img.convert("RGB").resize((224, 224), Image.Resampling.NEAREST)
-    x = np.asarray(img, dtype=np.float32) / 255.0
-    return (x - MEAN)[np.newaxis]
+    x = np.asarray(img, dtype=np.float32)
+    return ((x - MEAN) / 255.0)[np.newaxis]
 
 
 @app.errorhandler(HTTPException)
