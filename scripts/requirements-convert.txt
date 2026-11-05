@@ -1,0 +1,9 @@
+# For convert.py and verify.py only (not needed to run the API).
+# These pins need Python 3.11.
+tensorflow-cpu==2.16.2
+tf2onnx==1.16.1
+onnx==1.16.2
+onnxruntime==1.19.2
+protobuf==3.20.3
+numpy<2
+pillow

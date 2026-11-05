@@ -1,0 +1,24 @@
+.git
+.gitignore
+.dockerignore
+.gcloudignore
+.venv
+**/__pycache__
+.pytest_cache
+.env
+tests
+huggingface
+*.md
+!model/README.md
+model/*.keras
+model/*.h5
+
+# AI tool config
+.claude
+CLAUDE.md
+AGENTS.md
+.cursor
+.cursorrules
+.codex
+.continue
+.aider*

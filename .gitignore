@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# Model files (the model is hosted on the Hugging Face Hub)
+model/*
+!model/README.md
+*.onnx
+*.keras
+*.h5
+
+# Secrets
+.env
+
+# AI tool config
+.claude/
+CLAUDE.md
+AGENTS.md
+.cursor/
+.cursorrules
+.codex/
+.continue/
+.aider*

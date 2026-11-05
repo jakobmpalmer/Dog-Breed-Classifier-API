@@ -1,0 +1,24 @@
+# Files left out of `gcloud run deploy --source` uploads. Without this file,
+# gcloud would use .gitignore instead. model/README.md is uploaded so the
+# Dockerfile's COPY model/ works; the model itself is downloaded during the build.
+.gcloudignore
+.git
+.gitignore
+.venv/
+__pycache__/
+.pytest_cache/
+.env
+tests/
+huggingface/
+model/*
+!model/README.md
+
+# AI tool config
+.claude/
+CLAUDE.md
+AGENTS.md
+.cursor/
+.cursorrules
+.codex/
+.continue/
+.aider*
