@@ -65,7 +65,7 @@ gcloud run deploy dog-breed-api --source . --region us-west1 `
   --allow-unauthenticated `
   --min-instances 0 --max-instances 1 `
   --memory 1Gi --cpu 1 --concurrency 4 `
-  --set-env-vars "^@^ALLOWED_ORIGINS=https://dog-breed-classifier-frontend.vercel.app,http://localhost:3000"
+  --set-env-vars "^@^ALLOWED_ORIGINS=https://dog-breed-classifier-frontend.vercel.app,https://dogclassifier.jakobmpalmer.com,http://localhost:3000"
 ```
 
 - `--source .` uploads the repo (minus the files in `.gcloudignore`) and builds it with Cloud Build.
