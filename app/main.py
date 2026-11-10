@@ -20,8 +20,8 @@ ALLOWED_ORIGINS = os.environ.get(
 ).split(",")
 MAX_UPLOAD_BYTES = 10 * 1024 * 1024
 
-# ImageNet channel means, subtracted after scaling to [0, 1]. The model was
-# trained without std division, so none is applied here.
+# ImageNet channel means, subtracted before dividing by 255 to match training.
+# The model was trained without std division, so none is applied here.
 MEAN = np.array([0.485, 0.456, 0.406], dtype=np.float32)
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
@@ -48,7 +48,7 @@ CORS(app, origins=[o.strip() for o in ALLOWED_ORIGINS if o.strip()])
 
 
 def preprocess(img):
-    """Match training: RGB, nearest resize to 224x224, /255, minus means, NHWC."""
+    """Match training: RGB, nearest resize to 224x224, minus means, /255, NHWC."""
     img = img.convert("RGB").resize((224, 224), Image.Resampling.NEAREST)
     x = np.asarray(img, dtype=np.float32)
     return ((x - MEAN) / 255.0)[np.newaxis]

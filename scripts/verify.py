@@ -2,7 +2,7 @@
 
 Preprocessing matches Jakob's training notebook exactly:
   load as RGB, resize to 224x224 (nearest, the Keras generator default),
-  divide by 255, subtract the ImageNet channel means. No std division.
+  subtract the ImageNet channel means, then divide by 255. No std division.
 
 Usage: python verify.py model.keras dog_breed_densenet.onnx data/test
 """
@@ -17,8 +17,8 @@ MEAN = np.array([0.485, 0.456, 0.406], dtype=np.float32)
 
 def preprocess(path):
     img = Image.open(path).convert("RGB").resize((224, 224), Image.NEAREST)
-    x = np.asarray(img, dtype=np.float32) / 255.0
-    return x - MEAN
+    x = np.asarray(img, dtype=np.float32)
+    return (x - MEAN) / 255.0
 
 
 keras_path, onnx_path, test_dir = sys.argv[1:4]

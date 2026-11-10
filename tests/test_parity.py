@@ -1,7 +1,7 @@
 """Accuracy through the app's own preprocessing on the Kaggle test set.
 
 Runs only when TEST_IMAGES_DIR points at the "70 Dog Breed Images/test" folder.
-The exported model scored 96.14% on it (see the model card).
+The exported model scores 96.43% on it (see the model card).
 """
 import os
 from pathlib import Path
